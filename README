@@ -1,0 +1,11 @@
+### Problem  
+Based on books I like, I want to be recommended similar books that are available in local libraries.  
+### Data Model  
+SQLite3 database file.  
+Note to add number of pages.  
+### Algorithm and Architecture  
+Machine learning algorithms such as linear regression, logistic regression, decision trees, random forests, or support vector machines.  
+Gen AI can outperform traditional ML in language understanding.  
+Algorithms should be aligned to specific tasks.  
+### Tasks  
+Tasks include searching books based on inputted book, genre, or content.

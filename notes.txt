@@ -1,0 +1,21 @@
+name of relevant fetch/XHR requests under network
+for Jazz: 
+request: https://catalogplus.libraryweb.org/frbr/resources/142763
+purpose: returns an array of the different copies and their formats of the item
+
+request: https://catalogplus.libraryweb.org/resource/details/989539292?_=1779642120161
+purpose: return information about that copy of the item
+query string: 1779642120161 (this is a timestamp in milliseconds, for cache purposes)
+
+the two urls above are the most important, one returns the id needed for the other, 
+which then returns the relevant information about the item
+
+Formats:
+1- Playaway
+2- Book
+3- Book on CD
+4- Large Print
+
+using sqlite3:
+sqlite3 library_books.db
+
