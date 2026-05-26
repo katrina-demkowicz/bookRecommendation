@@ -10,6 +10,10 @@ query string: 1779642120161 (this is a timestamp in milliseconds, for cache purp
 the two urls above are the most important, one returns the id needed for the other, 
 which then returns the relevant information about the item
 
+for Temporary:
+request: https://catalogplus.libraryweb.org/frbr/resources/855335
+request: https://catalogplus.libraryweb.org/resource/details/1752798099?_=1779738680993
+
 Formats:
 1- Playaway
 2- Book
