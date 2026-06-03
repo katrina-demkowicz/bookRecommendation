@@ -23,6 +23,9 @@ def insert_book(book):
         cursor = connection.cursor()
         sql_statement = '''INSERT INTO books(book_id, copy_id, title, author, summary, subjects) 
         values (?, ?, ?, ?, ?, ?)'''
+        cursor.execute(sql_statement, book)
+        connection.commit()
+        return cursor.lastrowid
     pass    
 
 '''Get the first copy of the book that is in a book format'''
