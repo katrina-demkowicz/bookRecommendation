@@ -4,21 +4,13 @@ import time
 from book import Book
 
 def scrape():
-    # for the first attempt, going to scrape the library's page on
-    # Toni Morrison's Jazz
-    # book_ID = 142763
-    # #book_ID = 855335
-    # copy_ID = get_book_copy(book_ID)
-    # # make sure copy_ID isn't None or NULL
-    # copy_data = get_book_copy_data(copy_ID)
-    # process_book(copy_data, book_ID, copy_ID)
+    
     for i in range(150000):
         book_ID = i
-        #book_ID = 855335
         copy_ID = get_book_copy(book_ID)
+        # make sure copy_ID isn't None or NULL
         if copy_ID is None:
             continue
-        # make sure copy_ID isn't None or NULL
         copy_data = get_book_copy_data(copy_ID)
         book = process_book(copy_data, book_ID, copy_ID)
         print(book.book_ID)
