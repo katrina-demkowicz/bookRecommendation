@@ -2,6 +2,7 @@ import requests
 import json
 import time
 from book import Book
+import sqlite3
 
 def scrape():
     
@@ -12,15 +13,23 @@ def scrape():
         if copy_ID is None:
             continue
         copy_data = get_book_copy_data(copy_ID)
-        book = process_book(copy_data, book_ID, copy_ID)
-        print(book.book_ID)
-        print(book.copy_ID)
-        print(book.title)
-        print(book.author_first)
-        print(book.author_last)
-        print(book.summary)
-        print(book.subjects)
+        book =     book = process_book(copy_data, book_ID, copy_ID)
+        print(book)
         time.sleep(0.5)
+
+def insert_book(book):
+    database = 'library_books.db'
+
+    #connect to database file
+    with sqlite3.connect(database) as connection:
+        cursor = connection.cursor()
+        sql_statement = '''INSERT INTO books(book_id, copy_id, title, author, summary, subjects) 
+        values (?, ?, ?, ?, ?, ?)'''
+        cursor.execute(sql_statement, book)
+        connection.commit()
+        return cursor.lastrowid
+    pass    
+        
 
 '''Get the first copy of the book that is in a book format'''
 def get_book_copy(book_ID):
@@ -105,8 +114,8 @@ def process_book(copy_data, book_ID, copy_ID):
             book_subjects = json.dumps(subjects)
             # print(book_subjects)
     
-    #make book object
-    book = Book(book_ID, copy_ID, book_title, book_author_first, 
+    #make book list   
+    book = (book_ID, copy_ID, book_title, book_author_first, 
                 book_author_last, book_summary, book_subjects)     
     return book
 
