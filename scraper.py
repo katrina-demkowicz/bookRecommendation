@@ -12,7 +12,8 @@ def scrape():
     copy_ID = get_book_copy(book_ID)
     # make sure copy_ID isn't None or NULL
     copy_data = get_book_copy_data(copy_ID)
-    process_book(copy_data, book_ID, copy_ID)
+    book = process_book(copy_data, book_ID, copy_ID)
+    print(book)
 
 def insert_book(book):
     database = 'library_books.db'
@@ -107,8 +108,8 @@ def process_book(copy_data, book_ID, copy_ID):
             book_subjects = json.dumps(subjects)
             # print(book_subjects)
     
-    #make book object
-    book = Book(book_ID, copy_ID, book_title, book_author_first, 
+    #make book list   
+    book = (book_ID, copy_ID, book_title, book_author_first, 
                 book_author_last, book_summary, book_subjects)     
     return book
 
