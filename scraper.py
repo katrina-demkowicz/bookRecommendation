@@ -6,12 +6,29 @@ from book import Book
 def scrape():
     # for the first attempt, going to scrape the library's page on
     # Toni Morrison's Jazz
-    book_ID = 142763
-    #book_ID = 855335
-    copy_ID = get_book_copy(book_ID)
-    # make sure copy_ID isn't None or NULL
-    copy_data = get_book_copy_data(copy_ID)
-    process_book(copy_data, book_ID, copy_ID)
+    # book_ID = 142763
+    # #book_ID = 855335
+    # copy_ID = get_book_copy(book_ID)
+    # # make sure copy_ID isn't None or NULL
+    # copy_data = get_book_copy_data(copy_ID)
+    # process_book(copy_data, book_ID, copy_ID)
+    for i in range(150000):
+        book_ID = i
+        #book_ID = 855335
+        copy_ID = get_book_copy(book_ID)
+        if copy_ID is None:
+            continue
+        # make sure copy_ID isn't None or NULL
+        copy_data = get_book_copy_data(copy_ID)
+        book = process_book(copy_data, book_ID, copy_ID)
+        print(book.book_ID)
+        print(book.copy_ID)
+        print(book.title)
+        print(book.author_first)
+        print(book.author_last)
+        print(book.summary)
+        print(book.subjects)
+        time.sleep(0.5)
 
 '''Get the first copy of the book that is in a book format'''
 def get_book_copy(book_ID):
@@ -85,7 +102,7 @@ def process_book(copy_data, book_ID, copy_ID):
             #go through each value and add it to a list
             for v in value:
                 subject = v['value']
-                subject = subject.replace(' -- Fiction', '').strip()
+                subject = subject.split('--')[0].strip()
                 subject = subject.lower()
 
                 #make sure there are no duplicates
