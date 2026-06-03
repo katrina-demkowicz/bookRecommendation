@@ -1,35 +1,37 @@
 import requests
 import json
 import time
-from book import Book
-import sqlite3
+from utilities import *
 
 def scrape():
-    
-    for i in range(150000):
-        book_ID = i
-        copy_ID = get_book_copy(book_ID)
-        # make sure copy_ID isn't None or NULL
-        if copy_ID is None:
-            continue
-        copy_data = get_book_copy_data(copy_ID)
-        book =     book = process_book(copy_data, book_ID, copy_ID)
-        print(book)
-        time.sleep(0.5)
+        #list of processed books tuples
+        book_buffer = []
+        #amount of books to be inserted at one time
+        buffer_size = 100
+                
+        for i in range(9036, 150001):
+            #fetch book data
+            book_ID = i
+            copy_ID = get_book_copy(book_ID)
+            # make sure copy_ID isn't None or NULL
+            if copy_ID is None:
+                continue
+            copy_data = get_book_copy_data(copy_ID)
+            #process returned book data format into a tuple
+            book =     book = process_book(copy_data, book_ID, copy_ID)
+            book_buffer.append(book)
 
-def insert_book(book):
-    database = 'library_books.db'
+            #insert books into table 'books'
+            if len(book_buffer) >= buffer_size:
+                print(book_buffer)
+                insert_books(book_buffer)
 
-    #connect to database file
-    with sqlite3.connect(database) as connection:
-        cursor = connection.cursor()
-        sql_statement = '''INSERT INTO books(book_id, copy_id, title, author, summary, subjects) 
+            time.sleep(1)
+
+def insert_books(book_buffer):
+    sql = '''INSERT INTO books(book_id, copy_id, title, author, summary, subjects) 
         values (?, ?, ?, ?, ?, ?)'''
-        cursor.execute(sql_statement, book)
-        connection.commit()
-        return cursor.lastrowid
-    pass    
-        
+    return exec_commit_many(sql, book_buffer)
 
 '''Get the first copy of the book that is in a book format'''
 def get_book_copy(book_ID):
@@ -63,8 +65,8 @@ def get_book_copy_data(copy_ID):
 '''Process book data and return a book object'''
 def process_book(copy_data, book_ID, copy_ID):
     book_title = ''
-    book_author_first = ''
-    book_author_last = ''
+    #author format is 'firstname lastname'
+    book_author = ''
     book_summary = ''
     book_subjects = ''
 
@@ -87,8 +89,7 @@ def process_book(copy_data, book_ID, copy_ID):
             author_full_name = value[0]['linkValue']
             book_author_last = author_full_name.split(',')[0].strip()
             book_author_first = author_full_name.split(',')[1].strip()
-            # print(book_author_last)
-            # print(book_author_first)
+            book_author = f'{book_author_first} {book_author_last}'
 
         #get summary
         if label == 'Summary':
@@ -115,10 +116,9 @@ def process_book(copy_data, book_ID, copy_ID):
             # print(book_subjects)
     
     #make book list   
-    book = (book_ID, copy_ID, book_title, book_author_first, 
-                book_author_last, book_summary, book_subjects)     
+    book = (book_ID, copy_ID, book_title, book_author, book_summary, book_subjects)     
     return book
 
 if __name__ == '__main__':
+    setup_database()
     scrape()
-
