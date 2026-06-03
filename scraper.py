@@ -2,6 +2,7 @@ import requests
 import json
 import time
 from book import Book
+import sqlite3
 
 def scrape():
     # for the first attempt, going to scrape the library's page on
@@ -12,6 +13,16 @@ def scrape():
     # make sure copy_ID isn't None or NULL
     copy_data = get_book_copy_data(copy_ID)
     process_book(copy_data, book_ID, copy_ID)
+
+def insert_book(book):
+    database = 'library_books.db'
+
+    #connect to database file
+    with sqlite3.connect(database) as connection:
+        cursor = connection.cursor()
+        sql_statement = '''INSERT INTO books(book_id, copy_id, title, author, summary, subjects) 
+        values (?, ?, ?, ?, ?, ?)'''
+    pass    
 
 '''Get the first copy of the book that is in a book format'''
 def get_book_copy(book_ID):
