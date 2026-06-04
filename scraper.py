@@ -9,10 +9,11 @@ def scrape():
         #amount of books to be inserted at one time
         buffer_size = 100
                 
-        for i in range(9036, 150001):
+        for i in range(150001):
             #fetch book data
             book_ID = i
             copy_ID = get_book_copy(book_ID)
+            time.sleep(1)
             # make sure copy_ID isn't None or NULL
             if copy_ID is None:
                 continue
@@ -24,9 +25,8 @@ def scrape():
             #insert books into table 'books'
             if len(book_buffer) >= buffer_size:
                 print(book_buffer)
-                insert_books(book_buffer)
-
-            time.sleep(1)
+                insert_books(book_buffer)  
+                book_buffer.clear()          
 
 def insert_books(book_buffer):
     sql = '''INSERT INTO books(book_id, copy_id, title, author, summary, subjects) 
@@ -86,10 +86,16 @@ def process_book(copy_data, book_ID, copy_ID):
 
         #get author
         if label == 'Author':
+            if not value:
+                book_author = None
+                continue
             author_full_name = value[0]['linkValue']
-            book_author_last = author_full_name.split(',')[0].strip()
-            book_author_first = author_full_name.split(',')[1].strip()
-            book_author = f'{book_author_first} {book_author_last}'
+            if ',' in author_full_name:
+                book_author_last = author_full_name.split(',')[0].strip()
+                book_author_first = author_full_name.split(',')[1].strip()
+                book_author = f'{book_author_first} {book_author_last}'
+            else:
+                book_author = author_full_name
 
         #get summary
         if label == 'Summary':
@@ -120,5 +126,5 @@ def process_book(copy_data, book_ID, copy_ID):
     return book
 
 if __name__ == '__main__':
-    setup_database()
+    #setup_database()
     scrape()
