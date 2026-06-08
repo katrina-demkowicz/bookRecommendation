@@ -9,7 +9,7 @@ def scrape():
         #amount of books to be inserted at one time
         buffer_size = 100
                 
-        for i in range(150001):
+        for i in range(12566, 50000):
             #fetch book data
             book_ID = i
             copy_ID = get_book_copy(book_ID)
