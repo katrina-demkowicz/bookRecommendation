@@ -23,17 +23,5 @@ Formats:
 using sqlite3:
 sqlite3 library_books.db
 
-File "C:\Users\katde\source\repos\bookRecommendation\scraper.py", line 130, in <module>
-    scrape()                                       File "C:\Users\katde\source\repos\bookRecommendation\scraper.py", line 130, in <module>
->>     scrape()s\katde\source\repos\bookRecommendation\scraper.py", line 15, in scrape
->>   File "C:\Users\katde\source\repos\bookRecommendation\scraper.py", line 15, in scrape
->>     copy_ID = get_book_copy(book_ID)kRecommendation\scraper.py", line 42, in get_book_copy
->>   File "C:\Users\katde\source\repos\bookRecommendation\scraper.py", line 42, in get_book_copy
->>     array_ID_object = json.loads(array_ID.text)on\Python39\lib\json\__init__.py", line 346, in loads
->>   File "C:\Users\katde\AppData\Local\Programs\Python\Python39\lib\json\__init__.py", line 346, in loads
->>     return _default_decoder.decode(s)grams\Python\Python39\lib\json\decoder.py", line 337, in decode
->>   File "C:\Users\katde\AppData\Local\Programs\Python\Python39\lib\json\decoder.py", line 337, in decode
->>     obj, end = self.raw_decode(s, idx=_w(s, 0).end())hon39\lib\json\decoder.py", line 355, in raw_decode
->>   File "C:\Users\katde\AppData\Local\Programs\Python\Python39\lib\json\decoder.py", line 355, in raw_decode
->>     raise JSONDecodeError("Expecting value", s, err.value) from None
->> json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0 
+14585
+from id 13966 to 14065

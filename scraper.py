@@ -9,7 +9,7 @@ def scrape():
         #amount of books to be inserted at one time
         buffer_size = 100
                 
-        for i in range(12566, 50000):
+        for i in range(17519, 50000):
             #fetch book data
             book_ID = i
             copy_ID = get_book_copy(book_ID)
@@ -19,7 +19,7 @@ def scrape():
                 continue
             copy_data = get_book_copy_data(copy_ID)
             #process returned book data format into a tuple
-            book =     book = process_book(copy_data, book_ID, copy_ID)
+            book = process_book(copy_data, book_ID, copy_ID)
             book_buffer.append(book)
 
             #insert books into table 'books'

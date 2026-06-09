@@ -14,3 +14,4 @@ def exec_commit_many(sql, data):
             result = cursor.executemany(sql, data)
             conn.commit()
             return result
+    
