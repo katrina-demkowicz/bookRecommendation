@@ -7,9 +7,9 @@ def scrape():
         #list of processed books tuples
         book_buffer = []
         #amount of books to be inserted at one time
-        buffer_size = 100
+        buffer_size = 5
                 
-        for i in range(17519, 50000):
+        for i in range(40018, 50000):
             #fetch book data
             book_ID = i
             copy_ID = get_book_copy(book_ID)
@@ -57,8 +57,9 @@ def get_book_copy_data(copy_ID):
     url_get_copy_data = f"https://catalogplus.libraryweb.org/resource/details/{copy_ID}?_={current_time}"
     try:
         copy_data = requests.get(url_get_copy_data)
-        copy_data_object = json.loads(copy_data.text)
-        return copy_data_object
+        if copy_data.text is not None:
+            copy_data_object = json.loads(copy_data.text)
+            return copy_data_object
     except requests.exceptions.RequestException as error:
         print(f"Error occurred: {error}")
 
